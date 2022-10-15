@@ -9,6 +9,23 @@
 
 typedef DialogMessageButton (*AboutDialogScreen)(DialogsApp* dialogs, DialogMessage* message);
 
+static DialogMessageButton intro_screen(DialogsApp* dialogs, DialogMessage* message) {
+    DialogMessageButton result;
+
+    const char* screen_header = "Miquel Comas\n"
+                                "Mikicat\n";
+    const char* screen_text = "GitHub, GitLab:\n"
+                              "@mikicat";
+
+    dialog_message_set_header(message, screen_header, 0, 0, AlignLeft, AlignTop);
+    dialog_message_set_text(message, screen_text, 0, 26, AlignLeft, AlignTop);
+    result = dialog_message_show(dialogs, message);
+    dialog_message_set_header(message, NULL, 0, 0, AlignLeft, AlignTop);
+    dialog_message_set_text(message, NULL, 0, 0, AlignLeft, AlignTop);
+
+    return result;
+}
+
 static DialogMessageButton product_screen(DialogsApp* dialogs, DialogMessage* message) {
     DialogMessageButton result;
 
@@ -145,6 +162,7 @@ static DialogMessageButton fw_version_screen(DialogsApp* dialogs, DialogMessage*
 }
 
 const AboutDialogScreen about_screens[] = {
+    intro_screen,
     product_screen,
     compliance_screen,
     address_screen,
